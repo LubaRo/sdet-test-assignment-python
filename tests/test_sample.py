@@ -1,18 +1,10 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from pages.practice_form_page import PracticeFormPage
 
 
-def test_eight_components():
-    service = webdriver.ChromeService(
-        executable_path=os.getenv('PATH_TO_CROMEDRIVER')
-    )
-    driver = webdriver.Chrome(service=service)
-
-    driver.get("https://www.selenium.dev/selenium/web/web-form.html")
+def test_eight_components(driver):
+    practice_form_page = PracticeFormPage(driver)
+    practice_form_page.open_page()
 
     title = driver.title
     assert title == "Web form"
@@ -28,5 +20,3 @@ def test_eight_components():
     message = driver.find_element(by=By.ID, value="message")
     value = message.text
     assert value == "Received!"
-
-    driver.quit()

@@ -9,3 +9,9 @@ pip_update_requirements:
 
 test:
 	pytest tests
+
+test_and_report:
+	pytest --alluredir=./allure_reports tests
+
+watch_report:
+	allure serve  allure_reports/
