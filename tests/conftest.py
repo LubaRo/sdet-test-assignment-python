@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 @pytest.fixture(scope="function")
 def driver():
@@ -12,6 +14,9 @@ def driver():
         executable_path=os.getenv('PATH_TO_CROMEDRIVER')
     )
     driver = webdriver.Chrome(service=service)
+
+    # FIXME: if tests should pass for default window size
+    driver.maximize_window()
 
     yield driver
 
