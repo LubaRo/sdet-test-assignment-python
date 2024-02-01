@@ -75,30 +75,12 @@ class PracticeFormPage(BasePage):
         submit_button = self.driver.find_element(By.ID, 'submit')
         submit_button.click()
 
-    def check_form_submission(self, form_data):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, '.modal-content')
-        ))
+    def get_modal_content(self):
+        modal = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((
+                By.CSS_SELECTOR,
+                '.modal-content'
+            ))
+        )
 
-        modal_title = self.driver.find_element(
-            By.ID,
-            'example-modal-sizes-title-lg'
-        ).text
-
-        modal_content = self.driver.find_element(
-            By.CLASS_NAME,
-            'modal-body'
-        ).text
-
-        assert 'Thanks for submitting the form' in modal_title
-        assert form_data.get('firstName') in modal_content
-        assert form_data.get('lastName') in modal_content
-        assert form_data.get('email') in modal_content
-        assert form_data.get('phone') in modal_content
-        assert form_data.get('gender') in modal_content
-        # assert form_data.get('subjects') in modal_content
-        # assert form_data.get('birthday') in modal_content
-        assert form_data.get('picture') in modal_content
-        assert form_data.get('address') in modal_content
-        assert form_data.get('state') in modal_content
-        assert form_data.get('city') in modal_content
+        return modal.text
